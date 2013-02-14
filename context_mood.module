@@ -1,0 +1,78 @@
+<?php
+
+/**
+ * @file
+ * Main file for Context Mood module.
+ */
+
+/**
+ * Implements hook_context_registry().
+ */
+function context_mood_context_registry() {
+  return array(
+    'reactions' => array(
+      'mood' => array(
+        'title' => t('Mood'),
+        'plugin' => 'context_mood_context_reaction_mood',
+      ),
+    ),
+  );
+}
+
+/**
+ * Implmenets hook_context_plugins().
+ */
+function context_mood_context_plugins() {
+  $plugins = array();
+
+  $plugins['context_mood_context_reaction_mood'] = array(
+    'handler' => array(
+      'path' => drupal_get_path('module', 'context_mood') . '/plugins',
+      'file' => 'context_mood_context_reaction_mood.inc',
+      'class' => 'context_mood_context_reaction_mood',
+      'parent' => 'context_reaction',
+    ),
+  );
+
+  return $plugins;
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function context_mood_block_info() {
+  $blocks = array();
+
+  $blocks['mood'] = array(
+    'info' => t('Mood'),
+  );
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function context_mood_block_view($delta = '') {
+  $block = array();
+
+  if ($delta == 'mood') {
+    if ($plugin = context_get_plugin('reaction', 'mood')) {
+      $block['content'] = $plugin->execute();
+    }
+  }
+
+  return $block;
+}
+
+
+/**
+ * Implements hook_block_view_alter().
+ */
+function context_mood_block_view_alter(&$data, $block) {
+  if ($block->module == 'context_mood' && $block->delta == 'mood') {
+    if ($plugin = context_get_plugin('reaction', 'mood')) {
+      $data['content'] = $plugin->execute();
+    }
+  }
+}

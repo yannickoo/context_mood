@@ -1,0 +1,5 @@
+name = Context Mood
+description = Determine the mood of website.
+core = 7.x
+dependencies[] = context
+dependencies[] = entity
