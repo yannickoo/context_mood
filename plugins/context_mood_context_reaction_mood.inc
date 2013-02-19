@@ -60,6 +60,7 @@ class context_mood_context_reaction_mood extends context_reaction {
       '#element_validate' => array('element_validate_integer_positive'),
     );
 
+    // Provide a select list with view modes for every entity type.
     foreach ($view_modes as $entity_type => $entity_view_modes) {
       $form['view_mode'][$entity_type] = array(
         '#type' => 'select',
@@ -84,6 +85,7 @@ class context_mood_context_reaction_mood extends context_reaction {
       if (!empty($context->reactions[$this->plugin])) {
         // Getting context settings.
         $settings = $context->reactions[$this->plugin];
+
         // Normalize the settings.
         $entity_type = $settings['entity_type'];
         $entity_id = $settings['entity_id'];

@@ -20,7 +20,7 @@ function context_mood_context_registry() {
 }
 
 /**
- * Implmenets hook_context_plugins().
+ * Implements hook_context_plugins().
  */
 function context_mood_context_plugins() {
   $plugins = array();
@@ -57,22 +57,13 @@ function context_mood_block_view($delta = '') {
   $block = array();
 
   if ($delta == 'mood') {
+    // Execute Context's page conditions which would otherwise be called after
+    // hook_block_view so the plugin would not be executed.
+    context_context_page_condition();
     if ($plugin = context_get_plugin('reaction', 'mood')) {
       $block['content'] = $plugin->execute();
     }
   }
 
   return $block;
-}
-
-
-/**
- * Implements hook_block_view_alter().
- */
-function context_mood_block_view_alter(&$data, $block) {
-  if ($block->module == 'context_mood' && $block->delta == 'mood') {
-    if ($plugin = context_get_plugin('reaction', 'mood')) {
-      $data['content'] = $plugin->execute();
-    }
-  }
 }
