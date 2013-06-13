@@ -92,11 +92,9 @@ class context_mood_context_reaction_mood extends context_reaction {
         $view_mode = $settings['view_mode'][$entity_type];
 
         // Load the entity.
-        $entities = entity_load($entity_type, array($entity_id));
+        $entity = entity_load($entity_type, array($entity_id));
         // Getting the render array for the entity with the specific view mode.
-        $entities = entity_view($entity_type, $entities, $view_mode);
-        // Get the single entity.
-        $entity = $entities[$entity_type][$entity_id];
+        $entity = entity_view($entity_type, $entity, $view_mode);
 
         return $entity;
       }
