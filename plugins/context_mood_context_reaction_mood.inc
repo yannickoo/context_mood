@@ -66,7 +66,7 @@ class context_mood_context_reaction_mood extends context_reaction {
         '#type' => 'select',
         '#title' => t('View mode'),
         '#options' => $entity_view_modes,
-        '#default_value' => isset($values['entity_type']) ? $values['entity_type'] : '',
+        '#default_value' => isset($values['entity_type']) ? $values['view_mode'][$values['entity_type']] : '',
         '#description' => t('The view mode which should be used.'),
         '#empty_option' => t('Select view mode'),
         '#states' => array(
